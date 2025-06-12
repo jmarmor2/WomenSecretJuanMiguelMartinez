@@ -1,0 +1,328 @@
+package com.example.examen_womensecret
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.examen_womensecret.ui.theme.Examen_womensecretTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
+
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            Examen_womensecretTheme {
+                Scaffold(
+                    topBar = { Superior() }
+                ) { paddingValues ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                            .verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        Cabecera()
+                        fotos1()
+                        fotos2()
+                        texto1()
+                        Email()
+                        radio()
+                        Mischeckbox()
+                        Boton()
+                        Label()
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Superior() {
+    TopAppBar(
+        title = { Text("Juan Miguel. Women’secret") },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.White,
+            titleContentColor = Color.Black,
+            navigationIconContentColor = Color.White,
+            actionIconContentColor = Color.White
+        ),
+        navigationIcon = {
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Buscar",
+                    tint = Color.Black
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Filled.Email,
+                    contentDescription = "Email o Gmail",
+                    tint = Color.Black
+                )
+            }
+        }
+    )
+}
+
+@Composable
+fun Cabecera() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(65.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.imagen_1_arriba),
+            contentDescription = "Foto cabecera",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
+@Composable
+fun fotos1() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.imagen_2izquierda),
+            contentDescription = "foto1",
+            modifier = Modifier
+                .weight(1f)
+                .height(60.dp),
+            contentScale = ContentScale.Crop
+        )
+        Image(
+            painter = painterResource(id = R.drawable.imagen_3_derecha),
+            contentDescription = "foto2",
+            modifier = Modifier
+                .weight(1f)
+                .height(57.dp),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun fotos2() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.imagen_4_izquierda),
+            contentDescription = "foto 3",
+            modifier = Modifier
+                .weight(1f)
+                .height(57.dp),
+            contentScale = ContentScale.Crop
+        )
+        Image(
+            painter = painterResource(id = R.drawable.imagen_5derechya),
+            contentDescription = "foto4",
+            modifier = Modifier
+                .weight(1f)
+                .height(60.dp),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+fun texto1() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 14.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Consigue un 10% en tu próxima compra",
+            fontSize = 14.sp
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Email() {
+    var email by remember { mutableStateOf("") }
+    TextField(
+        value = email,
+        onValueChange = { email = it },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .border(1.dp, Color.Black, shape = MaterialTheme.shapes.small),
+        placeholder = { Text("Introduce aquí tu email") },
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+        singleLine = true,
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
+    )
+}
+
+@Composable
+fun radio() {
+    var opcionElegida by remember { mutableStateOf("") }
+    val opciones = listOf("Hombre", "Mujer")
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = "Selecciona tu género:",
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+
+        opciones.forEach { opcion ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = opcionElegida == opcion,
+                    onClick = { opcionElegida = opcion },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = Color.Blue
+                    )
+                )
+                Text(
+                    text = opcion,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun Mischeckbox() {
+    val opciones = remember {
+        mutableStateListOf(
+            Midataclass("Leer y aceptar las políticas de usuario", false),
+            Midataclass("Deseo recibir información por email", false),
+            Midataclass("Acepto todas las cookies", false)
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp)
+    ) {
+        opciones.forEach { opcion ->
+            FilaCheckbox(opcion)
+        }
+    }
+}
+
+@Composable
+fun FilaCheckbox(opcion: Midataclass) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = opcion.isCheckedState.value,
+            onCheckedChange = {
+                opcion.isCheckedState.value = it
+            },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Color(0xFF3B5998),
+                uncheckedColor = Color.Gray,
+                checkmarkColor = Color.White
+            )
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = opcion.title, fontSize = 14.sp, color = Color.Black)
+    }
+}
+
+@Composable
+fun Boton() {
+    Button(
+        onClick = { /* Aquí pones la lógica cuando esté habilitado */ },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        enabled = false, // Puedes poner una condición real si quieres
+        colors = ButtonDefaults.buttonColors(
+            disabledContainerColor = Color.LightGray,
+            disabledContentColor = Color.DarkGray
+        )
+    ) {
+        Text(
+            "RECIBIR MI DESCUENTO",
+            color = Color.Black,
+            fontSize = 13.sp
+        )
+    }
+}
+
+@Composable
+fun Label() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Divider(modifier = Modifier.weight(1f))
+        Text(
+            text = "Puedes cancelar la suscripción cuando quieras",
+            modifier = Modifier.padding(horizontal = 8.dp),
+            color = Color.Black,
+            style = MaterialTheme.typography.bodySmall.copy(
+                textDecoration = TextDecoration.Underline
+            )
+        )
+        Divider(modifier = Modifier.weight(1f))
+    }
+}
+                              package com.example.examen_womensecret
+
+import androidx.compose.runtime.mutableStateOf
+
+data class Midataclass(val title: String, var isChecked: Boolean = false) {
+    var isCheckedState = mutableStateOf(isChecked)
+}
