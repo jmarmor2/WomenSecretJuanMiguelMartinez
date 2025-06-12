@@ -1,16 +1,12 @@
-package ies.murgi.recufaris
+package com.example.examen_womensecret
 
-
-import ies.murgi.recufaris.ui.theme.RecuFarisTheme
+import android.content.res.Resources.Theme
 import android.os.Bundle
-import android.text.style.BackgroundColorSpan
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,52 +14,37 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.mipruebafarismohamedamine.Midataclass
-import java.time.format.TextStyle
+import com.example.examen_womensecret.ui.theme.Examen_womensecretTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -71,7 +52,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RecuFarisTheme {
+            Theme {
                 Scaffold(
                     topBar = { Superior() }
                 ) { paddingValues ->
@@ -139,7 +120,7 @@ fun Cabecera() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = R.drawable.cabecerafoto),
+            painter = painterResource(id = R.drawable.imagen_1_arriba),
             contentDescription = "Foto cabecera",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.FillBounds
@@ -155,14 +136,14 @@ fun fotos1() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Image(
-            painter = painterResource(id = R.drawable.foto5),
+            painter = painterResource(id = R.drawable.imagen_2izquierda),
             contentDescription = "foto1",
             modifier = Modifier.weight(1f).height(60.dp),
             contentScale = ContentScale.Crop
         )
         Image(
 
-            painter = painterResource(id = R.drawable.foto1),
+            painter = painterResource(id = R.drawable.imagen_3_derecha),
             contentDescription = "foto2",
             modifier = Modifier.weight(1f).height(57.dp),
             contentScale = ContentScale.Crop
@@ -177,7 +158,7 @@ fun fotos2() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Image(
-            painter = painterResource(id = R.drawable.foto2),
+            painter = painterResource(id = R.drawable.imagen_4_izquierda),
             contentDescription = "foto 3",
             modifier = Modifier.weight(1f)
                 .height(57.dp),
@@ -185,55 +166,59 @@ fun fotos2() {
             contentScale = ContentScale.Crop
         )
         Image(
-            painter = painterResource(id = R.drawable.foto3),
+            painter = painterResource(id = R.drawable.imagen_5derechya),
             contentDescription = "foto4",
 
             modifier = Modifier.weight(1f).height(60.dp),
-                    contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop
 
         )
     }
 }
 
 
-fun Inferior() {
+
+
+@Composable
+fun texto1() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 14.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Consigue un 10% en tu proxima compra",
+            fontSize = 14.sp
+            //font
+        )
+    }
 }
 
-    @Composable
-    fun texto1() {
-        Row(
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Email() {
+    Row {
+        var email by remember { mutableStateOf("") }
+        TextField(
+            value = email,
+            onValueChange = { email = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 14.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Consigue un 10% en tu proxima compra",
-                fontSize = 14.sp
-                //font
-            )
-        }
+                .padding(8.dp)
+                .border(1.dp, Color.Black, shape = MaterialTheme.shapes.small),
+            placeholder = { Text("Introduce aquí tu email") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            singleLine = true,
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
+        )
     }
+}
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun Email() {
-        Row {
-            var email by remember { mutableStateOf("") }
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .border(1.dp, Color.Black, shape = MaterialTheme.shapes.small),
-                placeholder = { Text("Introduce aquí tu email") },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-                singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
-            )
-        }
-    }
+@Composable
+fun TextField(value: Any, onValueChange: () -> Unit, modifier: Any, placeholder: () -> Unit, keyboardOptions: Any, singleLine: Boolean, colors: Any) {
+
+}
 
 @Composable
 fun radio() {
@@ -342,26 +327,64 @@ fun Buton() {
         Button(
  */
 
-    @Composable
-    fun Label() {
-        Row(
+@Composable
+fun Label() {
+    Row(
 
-            modifier = Modifier.fillMaxWidth()
-                .padding(vertical = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Divider(modifier = Modifier.weight(1f))
-            Text(
-                text = "Puedes cancelar la sucripcion cuando quieras",
-                modifier = Modifier.padding(horizontal = 8.dp),
-                color = Color.Black,
-                style = androidx.compose.ui.text.TextStyle(textDecoration = TextDecoration.Underline)
-            )
-            Divider(modifier = Modifier.weight(1f))
-        }
+        modifier = Modifier.fillMaxWidth()
+            .padding(vertical = 16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Divider(modifier = Modifier.weight(1f))
+        Text(
+            text = "Puedes cancelar la sucripcion cuando quieras",
+            modifier = Modifier.padding(horizontal = 8.dp),
+            color = Color.Black,
+            style = androidx.compose.ui.text.TextStyle(textDecoration = TextDecoration.Underline)
+        )
+        Divider(modifier = Modifier.weight(1f))
+    }
+}
+
+
+
+
+  /*
+    fun Superior(){
+        //crear una funcoin composabel superior() y para cada uno de los componentes que la integran
+        //una tollbar con un unico icono y tiutuo
+        //las imagenes
+
+        //en resumen una tabla ocn la imgaen 1 arriba ocupadno dos cuadros otras dos abajo la mitad y otras dos abajo la mitad osea tabla de 3 filas por 2 columnas
+
+        //imagenens en esos cuadros,
+
     }
 
 
-data class Midataclass(val title: String, var isChecked: Boolean = false) {
-    var isCheckedState = mutableStateOf(isChecked)
+
+
+    fun Inferior(){
+        //crearas una funcoin compoabel inferior y para cada uno de los componentes que la intefran
+        // el mail debe ocupar una sola linea de teclado adaptado
+        //usa spacer entre elementso y padiin los contnendedores
+        //el bton se habilirata si el mail es corrrecto
+
+
+    }
+   */
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
