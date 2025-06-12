@@ -1,4 +1,4 @@
-
+mira este es el perfecto esta y cumple con todo la pantalla tirene el scroll traqnuilo q baja pulesa raton a abajo y baja me entiendes 
 package com.example.examen_womensecret
 
 import android.os.Bundle
@@ -365,13 +365,3 @@ data class Midataclass(val title: String, var isChecked: Boolean = false) {
 }
 
 
-//la otra clase , es una dataclass. 
-//si te da problemas lo de IconButton
-// añade esta deèndencia implementation("androidx.compose.material:material-icons-core")
-package com.example.examen_womensecret
-
-import androidx.compose.runtime.mutableStateOf
-
-data class Midataclass(val title: String, var isChecked: Boolean = false) {
-    var isCheckedState = mutableStateOf(isChecked)
-}
