@@ -1,5 +1,3 @@
-aqui tienes okkkk no cpies mis comentarios. 
-
 
 package com.example.examen_womensecret
 
@@ -66,6 +64,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Examen_womensecretTheme {
+                var email by remember { mutableStateOf("") } // Estado compartido del email
+                
                 Scaffold(
                     topBar = { Superior() }
                 ) { paddingValues ->
@@ -80,10 +80,10 @@ class MainActivity : ComponentActivity() {
                         fotos1()
                         fotos2()
                         texto1()
-                        Email()
+                        Email(email) { email = it }
                         radio()
                         Mischeckbox()
-                        Buton()
+                        Buton(email)
                         Label()
                     }
                 }
@@ -130,7 +130,7 @@ fun Cabecera() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(65.dp),
+            .height(120.dp), // Aumentado de 65dp a 120dp
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -154,7 +154,7 @@ fun fotos1() {
             contentDescription = "foto1",
             modifier = Modifier
                 .weight(1f)
-                .height(60.dp),
+                .height(150.dp), // Aumentado de 60dp a 150dp
             contentScale = ContentScale.Crop
         )
         Image(
@@ -162,7 +162,7 @@ fun fotos1() {
             contentDescription = "foto2",
             modifier = Modifier
                 .weight(1f)
-                .height(57.dp),
+                .height(150.dp), // Aumentado de 57dp a 150dp (igual que la otra)
             contentScale = ContentScale.Crop
         )
     }
@@ -179,7 +179,7 @@ fun fotos2() {
             contentDescription = "foto 3",
             modifier = Modifier
                 .weight(1f)
-                .height(57.dp),
+                .height(150.dp), // Aumentado de 57dp a 150dp
             contentScale = ContentScale.Crop
         )
         Image(
@@ -187,7 +187,7 @@ fun fotos2() {
             contentDescription = "foto4",
             modifier = Modifier
                 .weight(1f)
-                .height(60.dp),
+                .height(150.dp), // Aumentado de 60dp a 150dp (igual que la otra)
             contentScale = ContentScale.Crop
         )
     }
@@ -209,12 +209,11 @@ fun texto1() {
 }
 
 @Composable
-fun Email() {
+fun Email(email: String, onEmailChange: (String) -> Unit) {
     Row {
-        var email by remember { mutableStateOf("") }
         TextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = onEmailChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
@@ -310,20 +309,24 @@ fun FilaCheckbox(opcion: Midataclass) {
     }
 }
 
-@Preview
 @Composable
-fun Buton() {
+fun Buton(email: String) {
+    val isEmailValid = email.contains("@") && email.isNotEmpty()
+    
     Button(
         onClick = {},
-        modifier = Modifier.fillMaxWidth(),
-        enabled = false,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        enabled = isEmailValid,
         colors = ButtonDefaults.buttonColors(
-            disabledContentColor = Color.Gray,
+            containerColor = if (isEmailValid) Color(0xFF3B5998) else Color.Gray,
+            disabledContainerColor = Color.Gray
         )
     ) {
         Text(
             "RECIBIR MI DESCUENTO",
-            color = Color.Black,
+            color = Color.White,
             fontSize = 13.sp,
         )
     }
@@ -347,6 +350,20 @@ fun Label() {
         HorizontalDivider(modifier = Modifier.weight(1f))
     }
 }
+
+
+
+//la otra clase , es una dataclass. 
+//si te da problemas lo de IconButton
+// añade esta deèndencia implementation("androidx.compose.material:material-icons-core")
+package com.example.examen_womensecret
+
+import androidx.compose.runtime.mutableStateOf
+
+data class Midataclass(val title: String, var isChecked: Boolean = false) {
+    var isCheckedState = mutableStateOf(isChecked)
+}
+
 
 //la otra clase , es una dataclass. 
 //si te da problemas lo de IconButton
